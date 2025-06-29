@@ -9,7 +9,7 @@ import Dashboard from './components/Dashboard';
 import { Brain, Target, Award, Users } from 'lucide-react';
 
 // Configure axios base URL
-axios.defaults.baseURL = 'http://localhost:5000';
+axios.defaults.baseURL = 'https://igebra.onrender.com';
 
 function App() {
   const [currentStep, setCurrentStep] = useState('input');
