@@ -9,7 +9,7 @@ import Dashboard from './components/Dashboard';
 import { Brain, Target, Award, Users } from 'lucide-react';
 
 // Configure axios base URL
-axios.defaults.baseURL = 'https://igebra.onrender.com';
+axios.defaults.baseURL = 'http://localhost:5000';
 
 function App() {
   const [currentStep, setCurrentStep] = useState('input');
@@ -21,6 +21,11 @@ function App() {
   const [evaluations, setEvaluations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Debug useEffect to monitor state changes
+  useEffect(() => {
+    console.log('Current question index changed to:', currentQuestionIndex);
+  }, [currentQuestionIndex]);
 
   const handleJobDescriptionSubmit = async (description) => {
     setIsLoading(true);
@@ -93,6 +98,45 @@ function App() {
       console.error('Error evaluating answer:', err);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const skipCurrentQuestion = async () => {
+    try {
+      console.log('Skip button clicked! Current question index:', currentQuestionIndex);
+      console.log('Total questions:', questions.length);
+      
+      // Create a zero-score evaluation object consistent with backend schema
+      const zeroEval = {
+        overall_score: 0,
+        technical_accuracy: 0,
+        communication_clarity: 0,
+        depth_of_knowledge: 0,
+        contextual_understanding: 0,
+        problem_solving: 0,
+        feedback: 'Question skipped. No score awarded.',
+        strengths: [],
+        improvements: ['Provide an answer to receive feedback and a score.']
+      };
+
+      const newAnswers = [...answers, ''];
+      const newEvaluations = [...evaluations, zeroEval];
+
+      setAnswers(newAnswers);
+      setEvaluations(newEvaluations);
+
+      if (currentQuestionIndex < questions.length - 1) {
+        console.log('Moving to next question...');
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+      } else {
+        console.log('Interview completed, moving to results...');
+        // Interview completed
+        await saveSession(newAnswers, newEvaluations);
+        setCurrentStep('results');
+      }
+    } catch (err) {
+      console.error('Error skipping question:', err);
+      setError('Failed to skip question. Please try again.');
     }
   };
 
@@ -236,6 +280,7 @@ function App() {
             isLoading={isLoading}
             error={error}
             onBack={() => setCurrentStep('questions')}
+            onSkipQuestion={skipCurrentQuestion}
           />
         );
       
@@ -264,5 +309,6 @@ function App() {
     </Router>
   );
 }
-
 export default App; 
+
+

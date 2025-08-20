@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, Send, Clock, Target, Mic, MicOff, Volume2, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Send, Clock, Target, Mic, MicOff, Volume2, RefreshCw, SkipForward } from 'lucide-react';
 
 const InterviewSession = ({ 
   questions, 
@@ -7,7 +7,8 @@ const InterviewSession = ({
   onSubmitAnswer, 
   isLoading, 
   error, 
-  onBack 
+  onBack,
+  onSkipQuestion
 }) => {
   const [transcript, setTranscript] = useState('');
   const [isRecording, setIsRecording] = useState(false);
@@ -16,6 +17,9 @@ const InterviewSession = ({
   const [hasRecorded, setHasRecorded] = useState(false);
   const currentQuestion = questions[currentQuestionIndex];
   const recognitionRef = useRef(null);
+
+  // Debug logging
+  console.log('InterviewSession render - currentQuestionIndex:', currentQuestionIndex, 'total questions:', questions.length);
 
   useEffect(() => {
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
@@ -76,6 +80,16 @@ const InterviewSession = ({
       }
     }
   }, [isRecording]);
+
+  // Reset component state when question changes
+  useEffect(() => {
+    console.log('Question changed to index:', currentQuestionIndex);
+    setTranscript('');
+    setIsRecording(false);
+    setIsListening(false);
+    setRecognitionError('');
+    setHasRecorded(false);
+  }, [currentQuestionIndex]);
 
   const startRecording = () => {
     setTranscript('');
@@ -245,6 +259,7 @@ const InterviewSession = ({
                 <li>• Provide specific examples and experiences</li>
                 <li>• Click "Stop Recording" when finished</li>
                 <li>• You can re-record if needed</li>
+                <li>• Use "Skip" button if you want to skip a question (score will be 0)</li>
               </ul>
             </div>
           </div>
@@ -255,23 +270,37 @@ const InterviewSession = ({
               <div className="text-white/60 text-sm">
                 {transcript.length} characters
               </div>
-              <button
-                type="submit"
-                disabled={isLoading || !hasRecorded || !transcript.trim()}
-                className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
-              >
-                {isLoading ? (
-                  <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                    Evaluating...
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-5 h-5 mr-2" />
-                    Submit Answer
-                  </>
-                )}
-              </button>
+              <div className="flex space-x-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    console.log('Skip button clicked in InterviewSession');
+                    onSkipQuestion();
+                  }}
+                  disabled={isLoading}
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                >
+                  <SkipForward className="w-5 h-5 mr-2" />
+                  Skip
+                </button>
+                <button
+                  type="submit"
+                  disabled={isLoading || !hasRecorded || !transcript.trim()}
+                  className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                >
+                  {isLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                      Evaluating...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5 mr-2" />
+                      Submit Answer
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
             {error && (
               <div className="bg-red-500/20 border border-red-400/30 rounded-lg p-4">

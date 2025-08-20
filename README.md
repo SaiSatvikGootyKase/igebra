@@ -5,12 +5,14 @@ A sophisticated AI-powered interview preparation platform that transforms job de
 ## ✨ Features
 
 ### 🧠 AI-Powered Analysis
+
 - **Intelligent Job Description Parsing**: Extracts key skills and competencies using advanced AI
 - **Personalized Question Generation**: Creates job-specific interview questions based on extracted skills
 - **Multi-dimensional Evaluation**: Real-time scoring across 5 key dimensions
 - **Context-Aware Feedback**: Professional-level insights tailored to your responses
 
 ### 🎯 Core Functionality
+
 - **Skill Extraction**: Automatically identifies technical and soft skills from job postings
 - **Dynamic Question Types**: Mix of technical and behavioral questions with increasing complexity
 - **Real-time Evaluation**: Instant feedback with detailed scoring and improvement suggestions
@@ -18,6 +20,7 @@ A sophisticated AI-powered interview preparation platform that transforms job de
 - **Session History**: Track your progress across multiple interview sessions
 
 ### 🎨 Modern UI/UX
+
 - **Responsive Design**: Beautiful, modern interface that works on all devices
 - **Glass Morphism**: Elegant glass-effect design with gradient backgrounds
 - **Progress Tracking**: Visual progress indicators throughout the interview process
@@ -26,12 +29,14 @@ A sophisticated AI-powered interview preparation platform that transforms job de
 ## 🏗️ Architecture
 
 ### Backend (Python/Flask)
+
 - **Flask API**: RESTful endpoints for all functionality
 - **OpenAI Integration**: GPT-3.5-turbo for AI-powered features
 - **SQLite Database**: Lightweight data storage for sessions
 - **CORS Support**: Cross-origin resource sharing for frontend integration
 
 ### Frontend (React.js)
+
 - **React 18**: Modern React with hooks and functional components
 - **Tailwind CSS**: Utility-first CSS framework for styling
 - **Lucide React**: Beautiful, customizable icons
@@ -40,6 +45,7 @@ A sophisticated AI-powered interview preparation platform that transforms job de
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Python 3.8+
 - Node.js 16+
 - OpenAI API Key
@@ -47,34 +53,50 @@ A sophisticated AI-powered interview preparation platform that transforms job de
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
    cd ai-interview-prep
    ```
 
 2. **Set up the backend**
+
    ```bash
    # Install Python dependencies
    pip install -r requirements.txt
-   
+
    # Create environment file
    echo "OPENAI_API_KEY=your_openai_api_key_here" > .env
    ```
 
 3. **Set up the frontend**
+
    ```bash
    # Install Node.js dependencies
    npm install
    ```
 
 4. **Start the application**
+
    ```bash
    # Terminal 1: Start backend server
    python app.py
-   
+
    # Terminal 2: Start frontend development server
    npm start
    ```
+
+//
+//backend//
+python -m venv .venv
+.venv\Scripts\activate # Windows PowerShell
+pip install -r requirements.txt
+python app.py
+
+//frontend//
+npm install
+npm start
+//
 
 5. **Access the application**
    - Frontend: http://localhost:3000
@@ -83,21 +105,25 @@ A sophisticated AI-powered interview preparation platform that transforms job de
 ## 📋 Usage Guide
 
 ### 1. Job Description Input
+
 - Paste or upload a job description
 - Use the "Load Sample" button to try with example data
 - Click "Analyze & Extract Skills" to begin
 
 ### 2. Skill Extraction
+
 - Review automatically extracted skills
 - Choose difficulty level (Beginner/Intermediate/Advanced)
 - Generate personalized questions
 
 ### 3. Interview Session
+
 - Answer questions one by one
 - Take your time to provide detailed responses
 - Submit answers for real-time evaluation
 
 ### 4. Results & Feedback
+
 - View comprehensive performance analysis
 - Review detailed feedback for each question
 - Download results for future reference
@@ -106,6 +132,7 @@ A sophisticated AI-powered interview preparation platform that transforms job de
 ## 🔧 Configuration
 
 ### Environment Variables
+
 Create a `.env` file in the root directory:
 
 ```env
@@ -114,18 +141,19 @@ OPENAI_API_KEY=your_openai_api_key_here
 
 ### API Endpoints
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/parse-job-description` | POST | Extract skills from job description |
-| `/api/generate-questions` | POST | Generate personalized questions |
-| `/api/evaluate-answer` | POST | Evaluate user's answer |
-| `/api/save-session` | POST | Save interview session |
-| `/api/sessions` | GET | Get all interview sessions |
-| `/api/health` | GET | Health check endpoint |
+| Endpoint                     | Method | Description                         |
+| ---------------------------- | ------ | ----------------------------------- |
+| `/api/parse-job-description` | POST   | Extract skills from job description |
+| `/api/generate-questions`    | POST   | Generate personalized questions     |
+| `/api/evaluate-answer`       | POST   | Evaluate user's answer              |
+| `/api/save-session`          | POST   | Save interview session              |
+| `/api/sessions`              | GET    | Get all interview sessions          |
+| `/api/health`                | GET    | Health check endpoint               |
 
 ## 🎯 Evaluation Framework
 
 ### Scoring Dimensions (1-10 scale)
+
 - **Technical Accuracy**: Correctness and up-to-date technical information
 - **Communication Clarity**: How well the answer is articulated and structured
 - **Depth of Knowledge**: Comprehensiveness and detail of the response
@@ -133,6 +161,7 @@ OPENAI_API_KEY=your_openai_api_key_here
 - **Problem-Solving Approach**: Logical and effective problem-solving method
 
 ### Performance Levels
+
 - **Excellent (8-10)**: Outstanding performance with room for minor improvements
 - **Good (6-7.9)**: Solid performance with specific areas for enhancement
 - **Fair (4-5.9)**: Adequate performance requiring significant improvement
@@ -141,6 +170,7 @@ OPENAI_API_KEY=your_openai_api_key_here
 ## 🛠️ Development
 
 ### Project Structure
+
 ```
 ai-interview-prep/
 ├── app.py                 # Flask backend server
@@ -164,6 +194,7 @@ ai-interview-prep/
 ```
 
 ### Adding New Features
+
 1. **Backend**: Add new endpoints in `app.py`
 2. **Frontend**: Create new components in `src/components/`
 3. **Styling**: Use Tailwind CSS classes for consistent design
@@ -179,6 +210,7 @@ ai-interview-prep/
 ## 🚀 Deployment
 
 ### Backend Deployment
+
 ```bash
 # Using Python Anywhere, Heroku, or similar
 pip install -r requirements.txt
@@ -186,6 +218,7 @@ python app.py
 ```
 
 ### Frontend Deployment
+
 ```bash
 # Build for production
 npm run build
@@ -218,4 +251,4 @@ For support, email support@ai-interview-prep.com or create an issue in the repos
 
 ---
 
-**Built with ❤️ for the hackathon community** 
+**Built with ❤️ for the hackathon community**
